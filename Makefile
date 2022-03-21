@@ -7,7 +7,7 @@ GIT_BRANCH		:= 	$(shell git rev-parse --abbrev-ref HEAD)
 GIT_COMMITN		:=	$(shell git rev-list --count $(GIT_BRANCH))
 
 DEFINE_LIST		:=	$(MODE) VERSION=$(GIT_COMMITN)
-CPPARGS			:=	-Wall -Wextra -pedantic $(addprefix -D, $(DEFINE_LIST))
+CPPARGS			:=	-Wall -Wextra -pedantic $(addprefix -D, $(DEFINE_LIST)) -std=c++2a
 
 ifeq ($(MODE),DEBUG)
 	CPPARGS		+=	-g

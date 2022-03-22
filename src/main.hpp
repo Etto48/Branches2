@@ -6,3 +6,4 @@
 #include "./exceptions/exceptions.hpp"
 #include "./parser/parser.hpp"
 #include "./plot/plot.hpp"
+#include "./plot/matplotlibcpp.h"

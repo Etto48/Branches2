@@ -20,6 +20,7 @@ namespace Branches::core
         {"sinc",functions::sinc},
         {"u",functions::u},
         {"rect",functions::rect},
+        {"tri",functions::tri},
     };
 }
 
@@ -58,4 +59,5 @@ namespace Branches::core::functions
         if(x > -0.5 && x < 0.5) return 1;
         else return 0;
     }
+    data_t tri(data_t x){return (1-abs(x))*rect(x/2);}
 }

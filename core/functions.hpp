@@ -28,4 +28,5 @@ namespace Branches::core::functions
     data_t sinc(data_t x);
     data_t u(data_t x);
     data_t rect(data_t x);
+    data_t tri(data_t x);
 }

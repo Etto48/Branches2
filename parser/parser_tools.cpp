@@ -54,6 +54,7 @@ namespace Branches::parser
                 str.erase(0, 1);
                 str.erase(str.length() - 1, 1);
             }
+            else break;
         }
         return str;
     }

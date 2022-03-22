@@ -7,7 +7,7 @@ GIT_BRANCH		:= 	$(shell git rev-parse --abbrev-ref HEAD)
 GIT_COMMITN		:=	$(shell git rev-list --count $(GIT_BRANCH))
 
 DEFINE_LIST		:=	$(MODE) VERSION=$(GIT_COMMITN)
-CPPARGS			:=	-Wall -Wextra -pedantic $(addprefix -D, $(DEFINE_LIST)) -std=c++2a
+CPPARGS			:=	-Wall -Wextra -pedantic $(addprefix -D, $(DEFINE_LIST)) -std=c++2a -I/usr/include/python3.8 -lpython3.8 
 
 ifeq ($(MODE),DEBUG)
 	CPPARGS		+=	-g
@@ -17,7 +17,7 @@ endif
 
 CPPFILES		:= 	$(shell find ./ -name "*.cpp")
 OBJ				:=	$(patsubst %.cpp, %.o, $(CPPFILES))
-HEADERS			:=	$(shell find ./ -name "*.hpp")
+HEADERS			:=	$(shell find ./ -name "*.hpp") $(shell find ./ -name "*.h")
 ALL_OBJ			:=	$(shell find ./ -name "*.o")
 THIS			:=	./Makefile
 
@@ -27,7 +27,7 @@ all: $(PROJECT)
 
 $(PROJECT): $(OBJ)
 	@echo Linking $@
-	@$(CC) $(OBJ) -o $@ $(CARGS)
+	@$(CC) $(OBJ) -o $@ $(CPPARGS)
 
 ./%.o: ./%.cpp $(HEADERS) $(THIS)
 	@echo Compiling $@

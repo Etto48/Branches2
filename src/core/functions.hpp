@@ -3,7 +3,7 @@
 #include <string>
 #include <functional>
 #include <math.h>
-#include "./types.hpp"
+#include "types.hpp"
 
 namespace Branches::core
 {

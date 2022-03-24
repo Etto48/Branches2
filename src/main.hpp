@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "./core/core.hpp"
-#include "./exceptions/exceptions.hpp"
-#include "./parser/parser.hpp"
-#include "./plot/plot.hpp"
-#include "./plot/matplotlibcpp.h"
+#include "core/core.hpp"
+#include "exceptions/exceptions.hpp"
+#include "parser/parser.hpp"
+#include "plot/plot.hpp"
+#include "cli/cli.hpp"

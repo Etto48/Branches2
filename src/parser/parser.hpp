@@ -13,6 +13,7 @@ namespace Branches::parser
         core::Node::Pointer root;
     public:
         Parser(const std::string& _source);
+        const std::string& get_source();
         core::data_t operator()(core::variables_t variables);
     };
 }

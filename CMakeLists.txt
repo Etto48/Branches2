@@ -18,7 +18,7 @@ if (NOT ${Python3_NumPy_FOUND})
 endif()
 
 execute_process(
-        COMMAND pip show matplotlib
+        COMMAND pip3 show matplotlib
         RESULT_VARIABLE EXIT_CODE
         OUTPUT_QUIET
 )

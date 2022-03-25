@@ -5,6 +5,7 @@
 #include <sstream>
 #include "../parser/parser.hpp"
 #include "../plot/plot.hpp"
+#include <math.h>
 
 namespace Branches::cli
 {

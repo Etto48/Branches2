@@ -4,14 +4,16 @@
 namespace plt = matplotlibcpp;
 namespace Branches::plot
 {
-    void plot(std::vector<parser::Parser>& functions, unsigned samples, core::data_t from, core::data_t to)
+    void plot(std::vector<parser::Parser>& functions, core::variables_t user_vars, core::data_t samples, core::data_t from, core::data_t to)
     {
         core::data_t range_size = to - from;
         core::data_t step = range_size/samples;
 
         std::vector<core::data_t> x;
-        x.reserve(samples);
-        for (unsigned i = 0; i < samples; i++)
+        unsigned usamples = (unsigned)std::abs(int(samples));
+        
+        x.reserve(usamples);
+        for (unsigned i = 0; i < usamples; i++)
             x.push_back(i*step+from);
 
         plt::axvline(0,{{"color","dimgray"}});
@@ -21,10 +23,12 @@ namespace Branches::plot
         for(auto& f : functions)
         {
             std::vector<core::data_t> y;
-            y.reserve(samples);
+            y.reserve(usamples);
             for(auto& px : x)
             {
-                y.push_back(f({{"x",px}}));
+                std::map<std::string,core::data_t> vars = {{"x",px}};
+                vars.insert(user_vars.begin(),user_vars.end());
+                y.push_back(f(vars));
             }
             plt::plot(x,y);           
         }

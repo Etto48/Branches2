@@ -84,7 +84,7 @@ namespace Branches::parser
             for (int i = 1; i < (int)str.length(); i++)
             {
                 auto &c = str[i];
-                if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c < '0' || c > '9'))
+                if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c < '0' || c > '9') && (c != '_'))
                 {
                     return false;
                 }
@@ -173,7 +173,7 @@ namespace Branches::parser
                 }
                 else if(name)
                 {
-                    if((c < 'A' || c > 'Z')&&(c < 'a' || c > 'z'))
+                    if((c < 'A' || c > 'Z')&&(c < 'a' || c > 'z') && (c != '_'))
                     {
                         if(i == 0)
                             return false;

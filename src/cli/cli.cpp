@@ -10,14 +10,15 @@ namespace Branches::cli
             {"samples", default_samples},
     };
     std::vector<Branches::parser::Parser> functions;
+    bool error = false;
     std::string prompt()
     {
-        return "Functions: " + std::to_string(functions.size()) + ", Vars: " + std::to_string(user_vars.size()) + " > ";
+        return std::string{error? "\033[1;31mX\033[0m": "\033[1;32mO\033[0m"} + " Functions: " + std::to_string(functions.size()) + ", Vars: " + std::to_string(user_vars.size()) + " > ";
     }
 
     std::vector<std::string> split_command(const std::string &cmd)
     {
-        std::stringstream ss(cmd);
+        std::stringstream ss{cmd};
         std::vector<std::string> ret;
         std::string token;
         while (ss >> token)
@@ -132,6 +133,12 @@ namespace Branches::cli
                 std::cout << "exit:\n\tclose the program\n"
                           << std::endl;
             }
+            else
+            {
+                error = true;
+                continue;
+            }
+            error = false;
         }
     }
 };

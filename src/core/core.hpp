@@ -25,6 +25,8 @@ namespace Branches::core
         typedef std::unique_ptr<Node> Pointer;
         virtual NodeType type() = 0;
         virtual data_t operator()(variables_t variables) = 0;
+        virtual std::string text() = 0;
+        virtual std::string derivative(const std::string& var) = 0;
     };
 
     class ConstantNode: public Node
@@ -35,6 +37,8 @@ namespace Branches::core
         ConstantNode(data_t value);
         NodeType type(){return NodeType::ConstantNode;}
         virtual data_t operator()(variables_t variables);
+        virtual std::string text();
+        virtual std::string derivative(const std::string& var);
     };
 
     class VariableNode: public Node
@@ -45,6 +49,8 @@ namespace Branches::core
         VariableNode(std::string name);
         NodeType type(){return NodeType::VariableNode;}
         virtual data_t operator()(variables_t variables);
+        virtual std::string text();
+        virtual std::string derivative(const std::string& var);
     };
 
     enum class OperatorType
@@ -61,6 +67,8 @@ namespace Branches::core
         OperatorNode(OperatorType op, Node* left, Node* right);
         NodeType type(){return NodeType::OperatorNode;}
         virtual data_t operator()(variables_t variables);
+        virtual std::string text();
+        virtual std::string derivative(const std::string& var);
     };
 
     class PrefixNode: public Node
@@ -72,6 +80,8 @@ namespace Branches::core
         PrefixNode(bool negative, Node* child);
         NodeType type(){return NodeType::PrefixNode;}
         virtual data_t operator()(variables_t variables);
+        virtual std::string text();
+        virtual std::string derivative(const std::string& var);
     };
 
     class FunctionNode: public Node
@@ -83,5 +93,7 @@ namespace Branches::core
         FunctionNode(std::string name, Node* child);
         NodeType type(){return NodeType::FunctionNode;}
         virtual data_t operator()(variables_t variables);
+        virtual std::string text();
+        virtual std::string derivative(const std::string& var);
     };
 }

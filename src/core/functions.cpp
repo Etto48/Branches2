@@ -5,10 +5,13 @@ namespace Branches::core
     std::map<std::string,std::function<data_t(data_t)>> standard_functions
     {
         {"sin",functions::sin},
+        {"csc",functions::csc},
         {"sinh",functions::sinh},
         {"cos",functions::cos},
+        {"sec",functions::sec},
         {"cosh",functions::cosh},
         {"tan",functions::tan},
+        {"cot",functions::cot},
         {"tanh",functions::tanh},
         {"exp",functions::exp},
         {"ln",functions::ln},
@@ -27,10 +30,13 @@ namespace Branches::core
 namespace Branches::core::functions
 {
     data_t sin(data_t x){return std::sin(x);}
+    data_t csc(data_t x){return 1./std::sin(x);}
     data_t sinh(data_t x){return std::sinh(x);}
     data_t cos(data_t x){return std::cos(x);}
+    data_t sec(data_t x){return 1./std::cos(x);}
     data_t cosh(data_t x){return std::cosh(x);}
     data_t tan(data_t x){return std::tan(x);}
+    data_t cot(data_t x){return 1./std::tan(x);}
     data_t tanh(data_t x){return std::tanh(x);}
     data_t exp(data_t x){return std::exp(x);}
     data_t ln(data_t x){return std::log(x);}

@@ -2,13 +2,16 @@
 
 namespace Branches::cli
 {
-    constexpr core::data_t default_samples = 2000, default_x_min = -5, default_x_max = 5;
+    constexpr core::data_t default_samples = 2000, default_x_min = -5, default_x_max = 5, default_y_min = -5, default_y_max = 5;
     std::map<std::string, Branches::core::data_t> user_vars =
         {
             {"x_min", default_x_min},
             {"x_max", default_x_max},
             {"samples", default_samples},
+            {"y_min", default_y_min},
+            {"y_max", default_y_max},
     };
+    std::map<std::string, Branches::core::data_t> default_user_vars = user_vars;
     std::vector<Branches::parser::Parser> functions;
     bool error = false;
     std::string prompt()
@@ -75,23 +78,15 @@ namespace Branches::cli
                 if (tokens.size() == 2 && tokens[1] == "*")
                 {
                     user_vars.clear();
-                    user_vars = {
-                        {"x_min", default_x_min},
-                        {"x_max", default_x_max},
-                        {"samples", default_samples},
-                    };
+                    user_vars = default_user_vars;
                 }
                 else
                 {
                     for(unsigned i = 1; i < tokens.size(); i++)
                     {
                         auto& v = tokens[i];
-                        if(v == "x_min")
-                            user_vars["x_min"] = default_x_min;
-                        else if (v == "x_max")
-                            user_vars["x_max"] = default_x_max;
-                        else if (v == "samples")
-                            user_vars["samples"] = default_samples;
+                        if(default_user_vars.find(v)!=default_user_vars.end())
+                            user_vars[v]=default_user_vars[v];
                         else
                             user_vars.erase(v);
                     }
@@ -110,7 +105,7 @@ namespace Branches::cli
             }
             else if (tokens.size() == 1 && tokens[0] == "plot")
             {
-                plot::plot(functions, user_vars, user_vars["samples"], user_vars["x_min"], user_vars["x_max"]);
+                plot::plot(functions, user_vars);
             }
             else if (tokens.size() == 1 && tokens[0] == "help")
             {

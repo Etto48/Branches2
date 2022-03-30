@@ -4,8 +4,13 @@
 namespace plt = matplotlibcpp;
 namespace Branches::plot
 {
-    void plot(std::vector<parser::Parser>& functions, core::variables_t user_vars, core::data_t samples, core::data_t from, core::data_t to)
+    void plot(std::vector<parser::Parser>& functions, core::variables_t user_vars)
     {
+        core::data_t to = user_vars.find("x_max")->second;
+        core::data_t from = user_vars.find("x_min")->second;
+        core::data_t samples = user_vars.find("samples")->second;
+        core::data_t max = user_vars.find("y_max")->second;
+        core::data_t min = user_vars.find("y_min")->second;
         core::data_t range_size = to - from;
         core::data_t step = range_size/samples;
 
@@ -28,7 +33,11 @@ namespace Branches::plot
             {
                 std::map<std::string,core::data_t> vars = {{"x",px}};
                 vars.insert(user_vars.begin(),user_vars.end());
-                y.push_back(f(vars));
+                core::data_t new_val = f(vars);
+                if(new_val >= min && new_val <= max)
+                    y.push_back(new_val);
+                else 
+                    y.push_back(nan(" "));
             }
             plt::plot(x,y);           
         }

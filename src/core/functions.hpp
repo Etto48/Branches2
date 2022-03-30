@@ -13,10 +13,13 @@ namespace Branches::core
 namespace Branches::core::functions
 {
     data_t sin(data_t x);
+    data_t csc(data_t x);
     data_t sinh(data_t x);
     data_t cos(data_t x);
+    data_t sec(data_t x);
     data_t cosh(data_t x);
     data_t tan(data_t x);
+    data_t cot(data_t x);
     data_t tanh(data_t x);
     data_t exp(data_t x);
     data_t ln(data_t x);

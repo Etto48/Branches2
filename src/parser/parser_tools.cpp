@@ -61,15 +61,16 @@ namespace Branches::parser
     bool is_constant(const std::string &str)
     {
         bool dot_used = false;
-        for (auto &c : str)
+        for (unsigned i = 0; i < str.size(); i++)
         {
+            auto& c = str[i];
             if (c < '0' || c > '9')
             {
                 if (c == '.' && !dot_used)
                 {
                     dot_used = true;
                 }
-                else
+                else if(!((c == 'i' || c == 'j')&&(i==str.size()-1)))
                 {
                     return false;
                 }
@@ -191,7 +192,14 @@ namespace Branches::parser
     }
     core::data_t get_constant(const std::string &str)
     {
-        return std::stod(str);
+        bool imag = false;
+        std::string new_str = str;
+        if(new_str.back()=='i' || new_str.back()=='j')
+        {
+            imag = true;
+            new_str.pop_back();
+        }
+        return std::stod(new_str) * (imag? core::data_t{0,1} : core::data_t{1,0});
     }
     std::pair<core::OperatorType, std::pair<std::string, std::string>> split_operator(const std::string &str)
     {

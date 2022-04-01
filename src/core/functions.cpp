@@ -41,29 +41,29 @@ namespace Branches::core::functions
     data_t exp(data_t x){return std::exp(x);}
     data_t ln(data_t x){return std::log(x);}
     data_t log10(data_t x){return std::log10(x);}
-    data_t log2(data_t x){return std::log2(x);}
+    data_t log2(data_t x){return std::log(x)/std::log(2.0);}
     data_t abs(data_t x){return std::abs(x);}
 
     data_t sgn(data_t x)
     {
-        if(x > 0) return 1;
-        if(x < 0) return -1;
+        if(x.real() > 0) return 1;
+        if(x.real() < 0) return -1;
         else return 0;
     }
     data_t sinc(data_t x)
     {
-        if(x == 0) return 1;
+        if(x == 0.0) return 1;
         else return sin(PI*x)/(PI*x);
     }
     data_t u(data_t x)
     {
-        if(x >= 0) return 1;
+        if(x.real() >= 0) return 1;
         else return 0;
     }
     data_t rect(data_t x)
     {
-        if(x > -0.5 && x < 0.5) return 1;
+        if(std::abs(x) < 0.5) return 1;
         else return 0;
     }
-    data_t tri(data_t x){return (1-abs(x))*rect(x/2);}
+    data_t tri(data_t x){return (1.0-std::abs(x))*rect(x/2.0);}
 }

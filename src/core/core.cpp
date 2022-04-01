@@ -13,7 +13,7 @@ namespace Branches::core
     }
     std::string ConstantNode::text()
     {
-        return value == int(value)? std::to_string(int(value)) : std::to_string(value);
+        return value.real()==0 ? std::to_string(value.imag())+"i" : std::to_string(value.real());
     }
     std::string ConstantNode::derivative(const std::string &var)
     {
@@ -56,6 +56,8 @@ namespace Branches::core
             break;
         case OperatorType::division:
             // TODO: calculate the limit if both are 0
+            if( a == b )
+                return 1.0;
             return a / b;
             break;
         case OperatorType::power:

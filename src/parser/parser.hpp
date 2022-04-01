@@ -15,5 +15,6 @@ namespace Branches::parser
         Parser(const std::string& _source);
         const std::string& get_source();
         core::data_t operator()(core::variables_t variables);
+        std::string derivative(const std::string& var);
     };
 }

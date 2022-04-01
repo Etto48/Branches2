@@ -107,6 +107,20 @@ namespace Branches::cli
             {
                 plot::plot(functions, user_vars);
             }
+            else if (tokens.size() == 3 && tokens[0] == "derivative")
+            {
+                std::cout << parser::Parser(tokens[1]).derivative(tokens[2]) << std::endl;
+            }
+            else if (tokens.size() == 2 && tokens[0] == "fourier")
+            {
+                auto p = parser::Parser{tokens[1]};
+                plot::plot_ft(p,user_vars);
+            }
+            else if (tokens.size() == 2 && tokens[0] == "ifourier")
+            {
+                auto p = parser::Parser{tokens[1]};
+                plot::plot_ift(p,user_vars);
+            }
             else if (tokens.size() == 1 && tokens[0] == "help")
             {
                 std::cout << "help:\n\tdisplay this list\n"

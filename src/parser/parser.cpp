@@ -20,4 +20,9 @@ namespace Branches::parser
         sub_list.insert(core::constants.begin(),core::constants.end());
         return root->operator()(sub_list);
     }
+
+    std::string Parser::derivative(const std::string& var)
+    {
+        return root->derivative(var);
+    }
 }

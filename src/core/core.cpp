@@ -4,7 +4,10 @@ namespace Branches::core
 {
     variables_t constants{
         {"pi", PI},
-        {"e", E}};
+        {"e", E},
+        {"i",{0,1}},
+        {"j",{0,1}},
+    };
 
     ConstantNode::ConstantNode(data_t value) : value(value) {}
     data_t ConstantNode::operator()([[maybe_unused]] variables_t variables)
@@ -102,13 +105,45 @@ namespace Branches::core
         switch (op)
         {
         case OperatorType::sum:
-            return "(" + a + ")+(" + b + ")";
+            if(da=="0")
+                return db;
+            else if(db == "0")
+                return da;
+            else
+                return "(" + da + ")+(" + db + ")";
             break;
         case OperatorType::subtraction:
-            return "(" + a + ")-(" + b + ")";
+            if(da=="0")
+                return "-("+db+")";
+            else if(db == "0")
+                return da;
+            else
+                return "(" + da + ")-(" + db + ")";
             break;
         case OperatorType::product:
-            return "(" + da + ")*(" + b + ")+(" + a + ")*(" + db + ")";
+            {
+                std::string fh, sh;
+                if(da == "0" || b == "0")
+                    fh = "0";
+                else if(da == "1" || b == "1")
+                    fh = "1";
+                else 
+                    fh = "(" + da + ")*(" + b + ")";
+
+                if(a == "0" || db == "0")
+                    sh = "0";
+                else if(a == "1" || db == "1")
+                    sh = "1";
+                else
+                    sh = "(" + a + ")*(" + db + ")";
+
+                if(fh == "0")
+                    return sh;
+                else if(sh == "0")
+                    return fh;
+                else
+                    return fh+"+"+sh;
+            }
             break;
         case OperatorType::division:
             return "((" + da + ")*(" + b + ")-(" + a + ")*(" + db + "))/(" + b + ")^2";
@@ -159,9 +194,11 @@ namespace Branches::core
     {
         auto a = child->text();
         auto da = child->derivative(var);
+        
+        std::string fh;
         if(name == "sin")
         {
-            return "cos("+a+")*("+da+")";
+            fh = "cos("+a+")";
         }
         else if(name == "csc")
         {
@@ -173,7 +210,7 @@ namespace Branches::core
         }
         else if(name == "cos")
         {
-            return "-sin("+a+")*("+da+")";
+            fh = "-sin("+a+")";
         }
         else if(name == "sec")
         {
@@ -197,7 +234,7 @@ namespace Branches::core
         }
         else if(name == "exp")
         {
-            return "exp(" + a + ")*(" + da + ")";
+            fh = "exp(" + a + ")";
         }
         else if(name == "ln")
         {
@@ -213,7 +250,7 @@ namespace Branches::core
         }
         else if(name == "abs")
         {
-            return "sng("+a+")*("+da+")";
+            fh = "sng("+a+")";
         }
         else if(name == "sgn")
         {
@@ -239,5 +276,11 @@ namespace Branches::core
         {
             throw exceptions::UnknowFunction(name);
         }
+        if(da == "0")
+            return "0";
+        else if(da == "1")
+            return fh;
+        else 
+            return fh+"*("+da+")";
     }
 }

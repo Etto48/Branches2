@@ -56,7 +56,29 @@ namespace Branches::integration
     }
     std::vector<core::data_t> isft(parser::Parser& p, core::variables_t user_vars)
     {
+        double to = user_vars.find("x_max")->second.real();
+        double from = user_vars.find("x_min")->second.real();
+        double samples = user_vars.find("samples")->second.real();
+        double range_size = to - from;
+        double step = range_size/samples;
+        
         parser::Parser int_argument{"("+p.get_source()+")*exp(2j*pi*f*t)"};
-        return {};
+        std::vector<double> f;
+        unsigned usamples = (unsigned)std::abs(int(samples));
+        f.reserve(usamples);
+        for(unsigned i = 0; i < usamples; i++)
+            f.push_back(double(i)*step+from);
+        
+        std::vector<core::data_t> y;
+        y.reserve(usamples);
+        std::map<std::string,core::data_t> vars = {{"t",0}};
+        vars.insert(user_vars.begin(),user_vars.end());
+        double interval = samples / 20;
+        for(auto& fp : f)
+        {
+            vars["t"]=fp;  
+            y.push_back(integrate(-interval,interval,int_argument,"f",vars));
+        }
+        return y;
     }
 }

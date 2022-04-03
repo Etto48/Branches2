@@ -12,6 +12,9 @@ namespace Branches::core
 
 namespace Branches::core::functions
 {
+    data_t re(data_t x);
+    data_t im(data_t x);
+
     data_t sin(data_t x);
     data_t csc(data_t x);
     data_t sinh(data_t x);
@@ -32,4 +35,8 @@ namespace Branches::core::functions
     data_t u(data_t x);
     data_t rect(data_t x);
     data_t tri(data_t x);
+    data_t floor(data_t x);
+
+    data_t rectw(data_t x);
+    data_t triw(data_t x);
 }
